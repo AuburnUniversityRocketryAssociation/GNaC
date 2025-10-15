@@ -1,0 +1,1 @@
+// sample sensors and return sensor report structure
