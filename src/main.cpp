@@ -6,8 +6,8 @@ int myFunction(int, int);
 
 void setup() {
   // Boot up procedure
-
-  // initalizeFC(); // rocket object and structure compontents
+  
+  initalizeFC(); // rocket object and structure compontents
   // initializeTelemetry(); // Initalize telemetry and/or ground serial
 
   Serial.println("Setup complete. Beginning framerate-driven procedure.");
@@ -21,7 +21,8 @@ void loop() {
   // Main code to run every frame:
 
   // --- Read sensors ---
-  // sensorReport = readSensors(); // Read IMU/GPS and feed into navigation library
+  sensorReport = readSensors(); // Read IMU/GPS and feed into navigation library
+  Serial.println(sensorReport);
 
   // powerManager(); // measure voltage and current, disable power to subsystems drawing too much.
   // handles abort secnarios if loss of power, short, or over temperature 
@@ -48,4 +49,17 @@ void loop() {
 // put function definitions here:
 int myFunction(int x, int y) {
   return x + y;
+}
+
+bool initalizeFC(){
+  /*
+  Begins serials and initalizes stuff, you know
+  */
+
+  Serial.begin(115200);
+  Serial.println("Beginning Start up Procedure");
+
+  Wire.begin
+
+  return true;
 }
