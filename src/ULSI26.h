@@ -6,6 +6,8 @@
 #include <bmp3.h>
 #include <Adafruit_BNO055.h>
 
+#include "RTClib.h"
+#include "logicState.h"
 #include "State.h"
 #include "SensorReport.h"
 #include "Rocket.h"

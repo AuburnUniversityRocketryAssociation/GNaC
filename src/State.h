@@ -1,7 +1,8 @@
 #ifndef State_H
 #define State_H
 
-#include <string>
+#include "logicState.h"
+#include "RTClib.h"
 
 struct State {
     unsigned int time;                      // timestamp in milliseconds
@@ -11,7 +12,9 @@ struct State {
     float roll, yaw, pitch;                 // rocket 
     double latitude, longitude;             // GPS coordinates
     float altitude;                         // Barometer altitude 
-    std::string logic;                      // Logic state TODO(convert to enum) 
+    logicState logic;                       // Logic state of vehicle
+    DateTime date;                          // Date from Real Time Clock
+    bool GND_test;                          // True when running ground test
 };
 
 #endif

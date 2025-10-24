@@ -14,10 +14,9 @@ void setup() {
 
 void loop() {
   // Main code to run every frame:
-
   
   // --- Read sensors ---
-  SensorReport SensorReport = readSensors(rocket.IMU_I2C_Address, rocket.RTC_I2C_Address, rocket.Barometer_I2C_Address); // Read IMU/GPS, sensor array
+  SensorReport SensorReport = readSensors(); // Read IMU/GPS, sensor array
 
   // powerManager(); // measure voltage and current, disable power to subsystems drawing too much.
   // handles abort secnarios if loss of power, short, or over temperature 
@@ -31,15 +30,10 @@ void loop() {
   // control();                 // Correction using control surfaces 
 
   // --- Events ---
-  // updates rocket state and runs events Example. pastApogge== true --> Parachute.launch
+  // updates rocket state and runs events      Example. pastApogge == true --> Rocket.launchParachute()
   // eventManager(); // handles EVENT (status) class, checking trigger fucntions and time constraints 
   // ledManager(); // blinky led cool
   // pyroManager(); // PYRO objects, checks continuity and, if firing, checks firing durations
   // logManager(); // writes flight data to flash memory, then at end writes to mircoSD
   // timeStepUpdate(); // ensure constant framerate
 }
-
-/*
-  Begins serials and checks for sensors
-  build I2C address of sensors and their jacobians, and static data
-  */
