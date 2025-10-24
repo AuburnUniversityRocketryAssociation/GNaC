@@ -1,34 +1,11 @@
-#include <Arduino.h>
-#include <Wire.h>
-#include <USLI_26.h>
-
-
-// put function declarations here:
-int myFunction(int, int);
-
-struct SensorReport {
-    uint64_t timestamp;       // Unix timestamp in milliseconds
-    float accelX, accelY, accelZ;  // IMU accelerometer
-    float gyroX, gyroY, gyroZ;     // IMU gyroscope
-    double latitude, longitude;    // GPS coordinates
-    float altitude;                // Barometer altitude
-    float pressure;                // Barometric pressure
-};
-
-bool initalizeFC();
-SensorReport readSensor();
-
-
-// I2C addresses 
-
+#include "ULSI26.h"
 
 void setup() {
   // Boot up procedure
   
-  initalizeFC(); // rocket object and structure compontents
-  // initializeTelemetry(); // Initalize telemetry and/or ground serial
-  Serial.println(millis());
-  Serial.println("Setup complete. Beginning framerate-driven procedure.");
+  initalizeFC(); // creates rocket object and establishes serial busses
+  
+  
   // setFlightComputerState(FC_ARMED);
   // setVehicleState(VEHICLE_STARTUP);
   // setControlState(CONTROL_DISABLED);
@@ -38,8 +15,9 @@ void setup() {
 void loop() {
   // Main code to run every frame:
 
+  
   // --- Read sensors ---
-  SensorReport = readSensors(); // Read IMU/GPS, sensor array
+  SensorReport SensorReport = readSensors(rocket.IMU_I2C_Address, rocket.RTC_I2C_Address, rocket.Barometer_I2C_Address); // Read IMU/GPS, sensor array
 
   // powerManager(); // measure voltage and current, disable power to subsystems drawing too much.
   // handles abort secnarios if loss of power, short, or over temperature 
@@ -48,11 +26,9 @@ void loop() {
 
 
   // --- GNC Loop ---
-  // navigation(sensorReport); // in (positon, velocity, attitude) --> KF or PF --> state estimation
-  // guidance(); // path planning, claculate error in state to desired state
-  // control(); // Correction using control surfaces 
-
-  // telemetryUpdate(); // 
+  // navigation(sensorReport);  // KF or PF --> state estimation
+  // guidance();                // path planning, claculate error in state to desired state
+  // control();                 // Correction using control surfaces 
 
   // --- Events ---
   // updates rocket state and runs events Example. pastApogge== true --> Parachute.launch
@@ -63,43 +39,7 @@ void loop() {
   // timeStepUpdate(); // ensure constant framerate
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
-
-bool initalizeFC(){
-  /*
+/*
   Begins serials and checks for sensors
   build I2C address of sensors and their jacobians, and static data
   */
-
-  Serial.begin(115200);
-  Serial.println("Beginning Start up Procedure");
-
-  Wire.begin();
-
-  return true;
-}
-
-SensorReport readSensor() {
-    SensorReport report;
-    report.timestamp = getTimestamp();
-
-    int imuFile = setupI2C("/dev/i2c-1", 0x28);   // BNO055 default I2C address
-    int baroFile = setupI2C("/dev/i2c-1", 0x76);  // BMP3 default I2C address
-
-    // readIMU(imuFile, report);
-    // readGPS(gpsFile, report);
-    // readBarometer(baroFile, report);
-
-    // close(imuFile);
-    // close(baroFile);
-
-    return report;
-}
-
-float calculateAltitude(float pressure) {
-    // Simple formula assuming sea level pressure = 1013.25 hPa
-    return 44330.0f * (1.0f - pow(pressure / 1013.25f, 0.1903f));
-}
