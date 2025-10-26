@@ -2,10 +2,10 @@
 Guidance, Navigation, and Control computer for NASA USLI 2026 competition
 
 ### To Do list
-- [ ]  Collect Sensor reports 
+- [X]  Collect Sensor reports 
 - [ ]  Log data 
 - [ ]  Logic states such as *LANDED*
-- [ ]  Serial out print
+- [X]  Serial out print
 - [ ]  Add GPS 
 - [ ]  Sensor Fusion 
 - [ ]  State Estimaiton 
