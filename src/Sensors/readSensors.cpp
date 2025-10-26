@@ -7,31 +7,41 @@
 #include "objectsGlobal.h"
 #include "RTClib.h"
 
-SensorReport readSensors(){
+// Parm time: last sensor reading time
+SensorReport readSensors(uint32_t time){
     
     SensorReport report;
     float pressure;
-    
     report.timestamp = millis();
+    uint32_t deltaTime = (report.timestamp - time) / 1000; // converted from milliSeconds to Seconds 
+    report.deltaTime = deltaTime;
     
-    // readIMU(IMU_I2C_Address);
+    // read IMU
     sensors_event_t event;
     bno.getEvent(&event);   
 
+
+    // gets orientation in sensor frame
     imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
     report.heading = euler.x();
     report.roll = euler.y();
     report.pitch = euler.z();
-
+    
+    imu::Quaternion q = bno.getQuat();
+    
+    // gets acceration and then maps it to global frame
     imu::Vector<3> linAccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-    report.accelX = linAccel.x();
-    report.accelY = linAccel.y();
-    report.accelZ = linAccel.z();
+    
+    imu::Vector<3> globalAccel = q.rotateVector(linAccel);
+
+    report.accelX = globalAccel.x();
+    report.accelY = globalAccel.y();
+    report.accelZ = globalAccel.z();
 
 
-    // readBarometer(baroFile, report);
+    // read Barometer
     if (! bmp.performReading()) {
-        if(rocket.state.GND_test){
+        if(rocket.state.GND_link){
             Serial.println("Failed to perform reading BMP :"); 
         }
     }
@@ -44,7 +54,7 @@ SensorReport readSensors(){
     }
     
 
-    // readRTC(_RTC_I2C_Address);
+    // readRTC
     report.Date = rtc.now();
 
     return report;

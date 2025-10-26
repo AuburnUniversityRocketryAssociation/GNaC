@@ -5,9 +5,11 @@
 Rocket::Rocket(){};
 
 // Methods
-void Rocket::init(State initialState, int IMU_I2C_Address, int RTC_I2C_Address, int Barometer_I2C_Address){
-    this-> state = initialState;
-    this-> IMU_I2C_Address = IMU_I2C_Address;
-    this-> RTC_I2C_Address = RTC_I2C_Address;
-    this-> Barometer_I2C_Address = Barometer_I2C_Address;
+void Rocket::init(State initialState){
+    this-> state        = initialState;
+    this ->lastLogTime  = 0;    
 }
+
+void setLogicState(logicState lState){
+    rocket.state.logic = lState;
+};

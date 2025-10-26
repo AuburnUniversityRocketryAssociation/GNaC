@@ -3,7 +3,6 @@
 
 #include "SensorReport.h"
 
-
-SensorReport readSensors();
+SensorReport readSensors(uint32_t time);
 
 #endif
