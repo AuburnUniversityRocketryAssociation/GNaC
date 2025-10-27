@@ -10,6 +10,6 @@ void Rocket::init(State initialState){
     this ->lastLogTime  = 0;    
 }
 
-void setLogicState(logicState lState){
+void Rocket::setLogicState(logicState lState){
     rocket.state.logic = lState;
 };

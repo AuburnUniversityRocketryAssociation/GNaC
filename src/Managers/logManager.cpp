@@ -1,37 +1,33 @@
 #include "logManager.h"
 #include "objectsGlobal.h"
+#include "State.h"
 
 /*
 given
-max log time = 1000 seconds ~ 16 minutes
+    max log time = 1000 seconds ~ 16 minutes
 if 
-each log is 16 bytes 
+    each log is 160 bytes 
 then 
-max size is 0.16 MB
+    max size is 1.6 MB
 */ 
 
 
-const uint32_t LOG_INTERVAL = 10; // milliseconds
-const size_t MAX_LOG_SIZE = 10000;  // Max entries before stopping
+
+
 // example ---
-size_t logIndex = 0;
-bool loggingActive = true;
 
-LogEntry logBuffer[MAX_LOG_SIZE];
+// void logToMemory(float data) {
+//     if (!loggingActive) return;
 
-void logToMemory(float data) {
-    if (!loggingActive) return;
-
-    if (logIndex < MAX_LOG_SIZE) {
-        logBuffer[logIndex++] = {data};
-    } else {
-        loggingActive = false;  // Stop logging
-        if(rocket.state.GND_link){
-            Serial.println("[WARNING] Log limit reached. Logging stopped.");
-        };
-    };
-};
-
+//     if (logIndex < MAX_LOG_SIZE) {
+//         logBuffer[logIndex++] = {data};
+//     } else {
+//         loggingActive = false;  // Stop logging
+//         if(rocket.state.GND_link){
+//             Serial.println("[WARNING] Log limit reached. Logging stopped.");
+//         };
+//     };
+// };
 // example ---
 
 int logManager(SensorReport report){
@@ -42,6 +38,7 @@ int logManager(SensorReport report){
     */ 
    
    uint32_t current_time = millis();
+   // probably want some variabel log rate like high frequency when flying
    
    // Log rocket state if its been longer than the log interval
    if ( ( rocket.lastLogTime - current_time >= LOG_INTERVAL)){
@@ -51,6 +48,7 @@ int logManager(SensorReport report){
             Serial.print("Seconds from start: "+ String(report.timestamp/1000));
             Serial.print("\t Alt: " + String(report.altitude));
             Serial.print("\t X: " + String(report.accelX)+ "\t  Y: "+ String(report.accelY) + "\t  Z: " + String(report.accelZ));
+            Serial.println("");
         };
     };
 

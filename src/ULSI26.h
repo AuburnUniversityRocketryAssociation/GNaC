@@ -5,6 +5,7 @@
 #include <string>
 #include <bmp3.h>
 #include <Adafruit_BNO055.h>
+#include <SD.h>
 
 #include "Managers/logEntry.h"
 #include "RTClib.h"

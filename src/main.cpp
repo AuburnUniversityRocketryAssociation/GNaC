@@ -4,7 +4,8 @@ void setup() {
   // Boot up procedure
   initializeFC(); // creates rocket object and establishes serial busses
   
-  // rocket.setLogicState(ARMED); 
+    rocket.setLogicState(ARMED); 
+
   // timeStepUpdate();
 }
 
