@@ -10,3 +10,7 @@ Guidance, Navigation, and Control computer for NASA USLI 2026 competition
 - [ ]  Sensor Fusion 
 - [ ]  State Estimaiton 
 - [ ]  event handling
+
+- [ ]  
+## Sensor Manger
+- [ ] test it
