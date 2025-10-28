@@ -6,8 +6,10 @@
 #include <bmp3.h>
 #include <Adafruit_BNO055.h>
 #include <SD.h>
+#include <LittleFS.h>
 
-#include "Managers/logEntry.h"
+#include "Logger/loggy.h"
+
 #include "RTClib.h"
 #include "logicState.h"
 #include "State.h"
@@ -15,7 +17,6 @@
 #include "Rocket.h"
 #include "objectsGlobal.h"
 
-#include "Managers/logManager.h"
-#include "Managers/ledManager.h"
+#include "LED/ledManager.h"
 #include "initializeFC.h"
 #include "Sensors/readSensors.h"

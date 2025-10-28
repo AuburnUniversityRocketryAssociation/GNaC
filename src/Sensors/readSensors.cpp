@@ -23,14 +23,16 @@ SensorReport readSensors(uint32_t time){
 
     // gets orientation in sensor frame
     imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-    report.heading = euler.x();
+    report.yaw = euler.x();
     report.roll = euler.y();
     report.pitch = euler.z();
+
+    imu::Vector<3> test = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
     
     imu::Quaternion q = bno.getQuat();
     
     // gets acceration and then maps it to global frame
-    imu::Vector<3> linAccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
+    imu::Vector<3> linAccel = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
     
     imu::Vector<3> globalAccel = q.rotateVector(linAccel);
 
@@ -41,7 +43,7 @@ SensorReport readSensors(uint32_t time){
 
     // read Barometer
     if (! bmp.performReading()) {
-        if(rocket.state.GND_link){
+        if(rocket.GND_link){
             Serial.println("Failed to perform reading BMP :"); 
         }
     }
@@ -52,8 +54,10 @@ SensorReport readSensors(uint32_t time){
         // Simple formula assuming sea level pressure = 1013.25 hPa
         report.altitude = 44330.0f * (1.0f - pow(pressure / 1013.25f, 0.1903f));
     }
-    
 
+    // Teensy CPU temp
+    report.CPU_temp = tempmonGetTemp();
+    
     // readRTC
     report.Date = rtc.now();
 

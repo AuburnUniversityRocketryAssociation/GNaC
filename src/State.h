@@ -19,7 +19,6 @@ struct State {
     float altitude;                         // Barometer altitude 
     logicState logic;                       // Logic state of vehicle
     DateTime date;                          // Date from Real Time Clock
-    bool GND_link;                          // True when running ground test
 };
 
 #endif

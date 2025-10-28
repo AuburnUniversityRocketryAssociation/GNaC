@@ -32,6 +32,6 @@ void loop() {
   // eventManager(); // handles EVENT (status) class,  Example. pastApogge == true --> Rocket.launchParachute()
   ledManager(); // blinky led cool
   // pyroManager(); // PYRO objects, checks continuity and, if firing, checks firing durations
-  logManager(SensorReport); // writes flight data to flash memory, then at end writes to mircoSD
+  logger.update(SensorReport); // writes flight data to flash memory, then at end writes to mircoSD
   // timeStepUpdate(); // ensure constant framerate
 }
