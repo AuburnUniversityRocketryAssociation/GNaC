@@ -1,16 +1,16 @@
 #ifndef FLASHLOGGER_H
 #define FLASHLOGGER_H
 
-#include "ILogBackend.h"
+
+#include <string>
+#include "SensorReport.h"
 #include <LittleFS.h>
 
-
-
-class FlashLogger : public ILogBackend {
+class FlashLogger {
 public:
   LittleFS_QSPIFlash flash;
-  void begin();
-  void log(const SensorReport& report);
+  int begin();
+  void log(String line);
   bool dumpToSD(File& sdFile);
 
 private:
