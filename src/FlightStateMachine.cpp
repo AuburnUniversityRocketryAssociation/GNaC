@@ -5,17 +5,22 @@ void FlightStateMachine::begin() {
     lastPhase = IDLE;
 }
 
-void FlightStateMachine::update(const SensorReport& r) {
+void FlightStateMachine::update(const SensorReport& report) {
+    /*  [TO-DO]
+        trasnfer from checking sensor report to chekcing rocket state
+        tune conditionals from state shifts
+    */ 
+
     lastPhase = phase;
     switch (phase) {
         case IDLE:
-            if (r.altitude > 5.0 && r.accel[2] > 2.0) phase = ASCENT;
+            if (report.altitude > 1.0 && report.accel[2] > 2.0) phase = ASCENT;
             break;
         case ASCENT:
-            if (r.altitude < 10.0 && r.accel[2] < 1.0) phase = DESCENT;
+            if (report.altitude > 10.0 && report.accel[2] < 0) phase = DESCENT;
             break;
         case DESCENT:
-            if (r.altitude < 1.0 && fabs(r.accel[2]) < 0.5) phase = LANDED;
+            if (report.altitude < 100 && fabs(report.accel[2]) < 0.5) phase = LANDED;
             break;
         case LANDED:
             break;

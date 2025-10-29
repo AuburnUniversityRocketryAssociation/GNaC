@@ -11,10 +11,8 @@
 
 class SensorManager {
 public:
-    Adafruit_BNO055 bno = Adafruit_BNO055(55);
-    Adafruit_BMP3XX bmp;
-    RTC_DS3231 rtc;
+    // Methods
     void begin();
-    SensorReport read(bool GND_link);
+    SensorReport read();
 };
 #endif

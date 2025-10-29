@@ -1,10 +1,6 @@
 #include "FlashLogger.h"
 
-
-
-
 int FlashLogger::begin() {
-
   flash.begin();
   return 0;
 }

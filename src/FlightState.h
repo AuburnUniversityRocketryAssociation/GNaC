@@ -1,5 +1,5 @@
 #pragma once
-#include "SensorReport.h"
+#include "Sensor/SensorReport.h"
 
 enum FlightPhase { IDLE, ASCENT, DESCENT, LANDED };
 

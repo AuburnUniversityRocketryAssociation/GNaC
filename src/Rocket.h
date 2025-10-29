@@ -1,56 +1,24 @@
-#ifndef Rocket_H
-#define Rocket_H
+#ifndef ROCKET_H
+#define ROCKET_H
 
-#include "Sensors/SensorReport.h"
-#include "State.h"
-// #include "Sensors/readSensors.h"
-#include "Logger/LogManager.h"
-#include <Adafruit_BNO055.h>
-#include <Adafruit_BMP3XX.h>
-#include <bmp3.h>
-#include <Arduino.h>
+#include "Sensor/SensorReport.h"
+#include "RTClib.h"
 
-
-
-
-class Rocket {
-private:
-    SensorReport sensorReport;
-    LogManager logger;
-    Adafruit_BNO055 bno;
-    Adafruit_BMP3XX bmp;
-    RTC_PCF8523 rtc;
- 
-
+class Rocket{
 public:
-    
-    unsigned int time;                      // timestamp in milliseconds
-    State state;                            // rocket State
-    float voltage;                          // battery voltage
-    double latitude, longitude;             // GPS coordinates
-    float altitude;                         // Barometer altitude 
-    logicState logic;                       // Logic state of vehicle
-    DateTime date;                          // Date from Real Time Clock
-    uint32_t lastLogTime;
-    bool isLanded;
-    bool GND_link;                          // is connected to USB
-    float CPU_Temp;
+    float position[3];      // [x, y, z]
+    float velocity[3];      // [x, y, z]
+    float accel[3];         // [x, y, z]
+    float orientation[3];   // euler angles (yaw pitch roll)
+    SensorReport report;    // last sensor report
+    DateTime date;          // UTC ish date
+    uint32_t lastLogTimestamp;
+    float batteryVoltage; 
+    float FC_temp;
 
-    // int speed;
-    // int G_force;
+   
+private:
 
-    // Default constructor
-    Rocket(); 
-
-    void init(); // initializes serial communication and sensors
-
-    void setLogicState(logicState lState); // sets rocket logic state
-
-    void readSensors(); // updates sensorReport with new sensor data
-
-    void logManager(); // calls logger to log current rocket state and sensor report
-
-    void timeStepUpdate(); // handles timing for framerate consistency
 
 };
 

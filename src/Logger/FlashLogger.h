@@ -3,8 +3,8 @@
 
 
 #include <string>
-#include "SensorReport.h"
 #include <LittleFS.h>
+#include "Sensor/SensorReport.h"
 
 class FlashLogger {
 public:
@@ -14,7 +14,7 @@ public:
   bool dumpToSD(File& sdFile);
 
 private:
-  static constexpr size_t MAX_ENTRIES = 1000;
+  static constexpr size_t MAX_ENTRIES = 10000;
   size_t writeIndex = 0;
   String buffer[MAX_ENTRIES];
 };
