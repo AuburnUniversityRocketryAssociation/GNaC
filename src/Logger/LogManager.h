@@ -1,24 +1,26 @@
 #ifndef LOGMANAGER_H
 #define LOGMANGER_H
 
-#include "FlashLogger.h"
+//#include "FlashLogger.h"
 #include "SDLogger.h"
 #include "Sensor/SensorReport.h"
 #include "Rocket.h"
 
 
-
 class LogManager {
 public:
-  uint32_t LOG_INTERVAL = 50; // milliseconds
 
   // Methods
   void begin();
-  bool update(Rocket rocket, bool GND_link, String FlightState); // returns log time
-  void tryDumpFlashToSD();
+  bool update(Rocket rocket, bool GND_link, String FlightState);
+  bool logEvent(String event, String FlightState);
+  // void dumpFlashToSD();
 
 private:
-  FlashLogger flashLogger;
+  const int LOG_INTERVAL = 50; // milliseconds
+  const char* FileLog = "log.csv";
+  const char* FileEvent = "events.txt";
+  //FlashLogger flashLogger;
   SDLogger sdLogger;
   bool hasDumped = false;
 };

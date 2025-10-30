@@ -10,19 +10,22 @@ void FlightStateMachine::update(const SensorReport& report) {
         trasnfer from checking sensor report to chekcing rocket state
         tune conditionals from state shifts
     */ 
+     float accelMagnitude = sqrt(report.accel[0]*report.accel[0] + report.accel[1]*report.accel[1] + report.accel[2]*report.accel[2]);
 
     lastPhase = phase;
     switch (phase) {
         case IDLE:
-            if (report.altitude > 1.0 && report.accel[2] > 2.0) phase = ASCENT;
+            if (report.altitude > 1.0 && accelMagnitude > 2.0) phase = ASCENT;
             break;
         case ASCENT:
             if (report.altitude > 10.0 && report.accel[2] < 0) phase = DESCENT;
             break;
         case DESCENT:
-            if (report.altitude < 100 && fabs(report.accel[2]) < 0.5) phase = LANDED;
+            if (report.altitude < 100 && accelMagnitude < 0.5) phase = LANDED;
+            timeLanded = report.timestamp_ms;
             break;
         case LANDED:
+            if (report.timestamp_ms - timeLanded > 5000) phase = COMPLETE;
             break;
     }
 }
@@ -33,6 +36,7 @@ const char* FlightStateMachine::getState() const {
         case ASCENT: return "ASCENT";
         case DESCENT: return "DESCENT";
         case LANDED: return "LANDED";
+        case COMPLETE: return "COMPLETE";
         default: return "UNKNOWN";
     }
 }

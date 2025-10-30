@@ -1,10 +1,14 @@
 #pragma once
 #include "Sensor/SensorReport.h"
 
-enum FlightPhase { IDLE, ASCENT, DESCENT, LANDED };
+enum FlightPhase { IDLE, ASCENT, DESCENT, LANDED, COMPLETE };
 
 class FlightStateMachine {
 public:
+    //Class values
+    uint32_t timeLanded;
+
+    // Methods 
     void begin();
     void update(const SensorReport& r);
     const char* getState() const;

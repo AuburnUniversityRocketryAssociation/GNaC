@@ -6,12 +6,16 @@
 
 class SDLogger {
 public:
-  int begin();
+  int begin(const char* FileLog, const char* FileEvent);
   void log(String line);
-  File getLogFile();
+  void logEvent(String event);
+  File getFile(const char* filename);
 
 private:
+  const char* FileLog;
+  const char* FileEvent;
   File logFile;
+  void listFiles(File dir, int numTabs);
 };
 
 #endif
