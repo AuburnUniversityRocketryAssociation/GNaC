@@ -22,6 +22,8 @@ void setup() {
   fsm.begin();
   logger.begin();
 
+  Serial.println("Setup complete. Beginning Frame-rate operations.");
+
 }
 
 void loop() {
@@ -89,17 +91,14 @@ void loop() {
     if (input == 'l') {          // Trigger on 'l' to launch
       Sensor_report.altitude = 2;
       Sensor_report.accel[2] = 5;
-      Serial.println("we have lift off");
     }
     if (input == 'a'){          // trigger on 'a' to apogee
       Sensor_report.altitude = 20;
       Sensor_report.accel[2] = -1;
-      Serial.println("new highscore");
     }
     if (input == 'c'){        // trigger on 'c' to crash landl
       Sensor_report.altitude = 2;
       Sensor_report.accel[2] = 0;
-      Serial.println("game over");
     }
   }
   

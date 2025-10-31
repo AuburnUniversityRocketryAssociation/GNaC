@@ -15,17 +15,38 @@ void FlightStateMachine::update(const SensorReport& report) {
     lastPhase = phase;
     switch (phase) {
         case IDLE:
-            if (report.altitude > 1.0 && accelMagnitude > 2.0) phase = ASCENT;
+            if (1000 < report.timestamp_ms && report.timestamp_ms < 2000){
+                beigningAltitude = report.altitude;
+            }
+            if (accelMagnitude > 5.0) {
+                phase = ASCENT;
+                Serial.println("we have lift off");
+                timeLaunched = report.timestamp_ms;
+            }
             break;
         case ASCENT:
-            if (report.altitude > 10.0 && report.accel[2] < 0) phase = DESCENT;
+            if (report.accel[2] < 0 && timeLaunched + 5000 < report.timestamp_ms) {
+                phase = DESCENT;
+                Serial.println("Apogee reached");
+                timeApogee = report.timestamp_ms;
+                maxAltitude = report.altitude;
+            }
             break;
         case DESCENT:
-            if (report.altitude < 100 && accelMagnitude < 0.5) phase = LANDED;
-            timeLanded = report.timestamp_ms;
+            if (report.altitude - beigningAltitude < 100 && accelMagnitude < 1 && timeApogee + 5000 < report.timestamp_ms) {
+                phase = LANDED;
+                timeLanded = report.timestamp_ms;
+                Serial.println("Vehcile landed");
+            }
             break;
         case LANDED:
-            if (report.timestamp_ms - timeLanded > 5000) phase = COMPLETE;
+            if (report.timestamp_ms - timeLanded > 5000) {
+                phase = COMPLETE;
+                Serial.println("game over");
+            }
+            break;
+        case COMPLETE:
+            // Do nothing, final state
             break;
     }
 }

@@ -7,6 +7,10 @@ class FlightStateMachine {
 public:
     //Class values
     uint32_t timeLanded;
+    uint32_t timeLaunched;
+    uint32_t timeApogee;
+    float maxAltitude;
+    float beigningAltitude;
 
     // Methods 
     void begin();
