@@ -5,24 +5,23 @@ Guidance, Navigation, and Control computer for NASA USLI 2026 competition
 - [X]  Collect Sensor reports 
 - [x]  Log data 
 - [x]  Flight State Machine
-- [ ]  Serial print for all error statements 
-- [ ]  Add GPS 
+- [x]  Serial print for all error statements 
 - [ ]  Sensor Fusion 
-- [ ]  State Estimaiton
+- [ ]  State Estimaiton -- Unscented Kalman filter
 - [ ]  Frame rate manager
 - [ ]  Sensor calibration at start up
 
 ## Log Manger
+- [ ] Event logging
 - [ ] check SD card handling
-- [ ] csv header 1st row
-- [ ] handle files already on SD
+- [x] csv header 1st row
+- [x] handle files already on SD
 - [ ] check cyclic flash logger
 - [ ] tune logging interval and max flash logs
 - [ ] writing to sd after landing??
-- [ ] auto log stop after X time from landing
+- [x] auto log stop after X time from landing
 
 ## Flight state machine 
-- [ ] think of edge cases that could break machine
-- [ ] tune conditional gains
-
- 
+- [ ] fix conditionals
+- [ ] low pass fitler for sensor reports
+- [ ] call log methods at events
