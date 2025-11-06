@@ -29,13 +29,10 @@ void LogManager::begin() {
 bool LogManager::logEvent(String event, String FlightState) {
   
   // if(FlightState == "LANDED"){
-  //   sdLogger.logEvent(event);
+    sdLogger.logEvent(event);
   // } else {
   //   flashLogger.logEvent(event);
   // }
-
-  sdLogger.logEvent(event);
-
   return true;
 }
 
@@ -59,17 +56,18 @@ bool LogManager::update(Rocket Rocket, bool GND_link, String FlightState) {
   if ( ( int(deltaLogTime) >= int(LOG_INTERVAL))){
 
     String line = String(current_time/1000) + "," +                                                                                     // log timestamp
-                String(Rocket.report.timestamp_ms) + "," +                                                                              // Sensor Report timestamp
-                String(Rocket.report.accel[0]) + "," + String(Rocket.report.accel[1]) + "," + String(Rocket.report.accel[2]) + "," +    // Accerlerometer
-                String(Rocket.report.gyro[0]) + "," + String(Rocket.report.gyro[1]) + "," + String(Rocket.report.gyro[2]) + "," +       // gyroscopes
-                String(Rocket.report.altitude) + "," +                                                                                  // Baraometer pressure
-                String(Rocket.report.tempature) + "," +                                                                                 // Barometer tempature
-                String(Rocket.FC_temp) + "," +                                                                                          // Teensy  tempature
-                // String(Rocket.batteryVoltage);                                                                                          // Battery voltage
-                String("");
-                // String(Rocket.position[0]) + "," + String(Rocket.position[1]) + "," + String(Rocket.position[2]) + "," +                // estimated postion
-                // String(Rocket.velocity[0]) + "," + String(Rocket.velocity[1]) + "," + String(Rocket.velocity[2]) + "," +                // estimated velcoity
-                // String(Rocket.accel[0]) + "," + String(Rocket.accel[1]) + "," + String(Rocket.accel[2]);                                //estimated acceleration
+                  String(Rocket.report.timestamp_ms) + "," +                                                                              // Sensor Report timestamp
+                  String(Rocket.report.accel[0]) + "," + String(Rocket.report.accel[1]) + "," + String(Rocket.report.accel[2]) + "," +    // Accerlerometer
+                  String(Rocket.report.gyro[0]) + "," + String(Rocket.report.gyro[1]) + "," + String(Rocket.report.gyro[2]) + "," +       // gyroscopes
+                  String(Rocket.report.altitude) + "," +                                                                                  // Baraometer pressure
+                  String(Rocket.report.tempature) + "," +                                                                                 // Barometer tempature
+                  String(Rocket.FC_temp) + "," +                                                                                          // Teensy  tempature
+                  String(Rocket.report.Date) + "," +                                                                                      // RTC Date and Time
+                  // String(Rocket.position[0]) + "," + String(Rocket.position[1]) + "," + String(Rocket.position[2]) + "," +                // estimated postion
+                  // String(Rocket.velocity[0]) + "," + String(Rocket.velocity[1]) + "," + String(Rocket.velocity[2]) + "," +                // estimated velcoity
+                  // String(Rocket.accel[0]) + "," + String(Rocket.accel[1]) + "," + String(Rocket.accel[2]);                                //estimated acceleration
+                  // String(Rocket.batteryVoltage);                                                                                          // Battery voltage
+                  String("");
 
     // if(FlightState == "LANDED"){
     //   if (!hasDumped) {
@@ -85,7 +83,7 @@ bool LogManager::update(Rocket Rocket, bool GND_link, String FlightState) {
     // Temporary: just log to SD
     sdLogger.log(line);
 
-    // if(GND_link) Serial.println(line);  // great for debug
+    // if(GND_link) Serial.println(line);  // debug tool
   };
   Rocket.lastLogTimestamp = current_time;
   return true;

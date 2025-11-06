@@ -12,7 +12,7 @@ struct SensorReport {
     float altitude;                 
     float tempature;                
     float CPU_temp;                 
-    DateTime Date;                  
+    String Date;                  
 };
 
 #endif

@@ -11,7 +11,7 @@ public:
     float accel[3];         // [x, y, z]
     float orientation[3];   // euler angles (yaw pitch roll)
     SensorReport report;    // last sensor report
-    DateTime date;          // UTC ish date
+    String date;            // UTC ish date
     uint32_t lastLogTimestamp;
     float batteryVoltage; 
     float FC_temp;

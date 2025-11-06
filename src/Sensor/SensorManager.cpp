@@ -141,7 +141,7 @@ SensorReport SensorManager::read(){
     report.CPU_temp = tempmonGetTemp();
 
     // readRTC
-    report.Date = rtc.now();
+    report.Date = rtc.now().timestamp(DateTime::TIMESTAMP_FULL);
 
     return report;
 }

@@ -15,6 +15,7 @@ private:
   const char* FileLog;
   const char* FileEvent;
   File logFile;
+  File eventFile;
   void listFiles(File dir, int numTabs);
 };
 
